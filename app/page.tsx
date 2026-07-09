@@ -51,20 +51,20 @@ const topTasks = [
 
 export default function Home() {
   return (
-    <div className="flex h-screen overflow-hidden bg-white text-[#222] font-sans">
+    <div className="flex h-screen flex-col overflow-hidden bg-white text-[#222] font-sans lg:flex-row">
       <Sidebar />
 
       {/* Main */}
       <main className="relative flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[1180px] px-10 py-8">
+        <div className="mx-auto max-w-[1180px] px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           {/* Shop header */}
-          <header className="flex items-center gap-5">
+          <header className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
             <ShopAvatar />
             <div>
-              <h2 className="text-[30px] font-medium leading-tight text-[#222]">
+              <h2 className="text-[24px] font-medium leading-tight text-[#222] sm:text-[30px]">
                 Hi there, CyberResourcesInc
               </h2>
-              <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-[#595959]">
+              <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-[#595959] sm:text-[15px]">
                 <span className="flex items-center gap-1.5">
                   <span className="flex items-center gap-0.5">
                     <Star />
@@ -104,8 +104,8 @@ export default function Home() {
 
           {/* Customize your shop */}
           <section className="mt-9">
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="text-[22px] font-semibold text-[#222]">
+            <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+              <h3 className="text-[20px] font-semibold text-[#222] sm:text-[22px]">
                 Customize your shop
               </h3>
               <div className="flex items-center gap-2 pt-2">
@@ -123,7 +123,7 @@ export default function Home() {
               {checklist.map((item, i) => (
                 <div
                   key={item.label}
-                  className={`flex items-center gap-4 px-5 py-4 hover:bg-[#faf9f5] ${
+                  className={`flex items-center gap-3 px-4 py-4 hover:bg-[#faf9f5] sm:gap-4 sm:px-5 ${
                     i !== checklist.length - 1 ? "border-b border-[#e5e3dc]" : ""
                   }`}
                 >
@@ -154,7 +154,9 @@ export default function Home() {
 
           {/* Top tasks */}
           <section className="mt-10">
-            <h3 className="text-[22px] font-semibold text-[#222]">Top tasks</h3>
+            <h3 className="text-[20px] font-semibold text-[#222] sm:text-[22px]">
+              Top tasks
+            </h3>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {topTasks.map((task) => (
                 <div
@@ -189,8 +191,10 @@ export default function Home() {
 
           {/* Shop advisor */}
           <section className="mt-10">
-            <h3 className="text-[22px] font-semibold text-[#222]">Shop advisor</h3>
-            <div className="mt-4 flex items-start justify-between gap-6">
+            <h3 className="text-[20px] font-semibold text-[#222] sm:text-[22px]">
+              Shop advisor
+            </h3>
+            <div className="mt-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:gap-6">
               <div className="max-w-2xl">
                 <h4 className="text-[16px] font-semibold text-[#222]">
                   We&rsquo;ve lifted your Payment account reserve
@@ -246,7 +250,7 @@ export default function Home() {
         </div>
 
         {/* Get Help floating button */}
-        <button className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-[#2f2f31] px-5 py-3.5 text-[15px] font-medium text-white shadow-lg hover:bg-[#1f1f21]">
+        <button className="fixed bottom-4 right-4 flex items-center gap-2 rounded-full bg-[#2f2f31] px-4 py-3 text-[14px] font-medium text-white shadow-lg hover:bg-[#1f1f21] sm:bottom-6 sm:right-6 sm:px-5 sm:py-3.5 sm:text-[15px]">
           <ChatIcon />
           Get Help
         </button>

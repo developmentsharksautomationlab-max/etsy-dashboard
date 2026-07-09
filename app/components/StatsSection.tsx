@@ -83,7 +83,7 @@ export default function StatsSection() {
         <h3
           onDoubleClick={openEditor}
           title=""
-          className="cursor-default select-none text-[22px] font-semibold text-[#222]"
+          className="cursor-default select-none text-[20px] font-semibold text-[#222] sm:text-[22px]"
         >
           Stats
         </h3>
@@ -92,7 +92,7 @@ export default function StatsSection() {
         </a>
       </div>
 
-      <div className="mt-4 rounded-xl border border-[#e5e3dc] p-6">
+      <div className="mt-4 rounded-xl border border-[#e5e3dc] p-4 sm:p-6">
         <button className="flex items-center gap-1.5 text-[15px] text-[#222]">
           <span className="font-semibold">Date Range</span>
           <span className="text-[#595959]">This year</span>
@@ -102,7 +102,7 @@ export default function StatsSection() {
           {fields.map((field) => (
             <div key={field.key}>
               <p className="text-[15px] font-medium text-[#222]">{field.label}</p>
-              <p className="mt-1 text-[30px] font-medium leading-none text-[#222] transition-all duration-300">
+              <p className="mt-1 text-[24px] font-medium leading-none text-[#222] transition-all duration-300 sm:text-[30px]">
                 {values[field.key]}
               </p>
               <p className="mt-2 text-[14px] text-[#595959] underline decoration-dashed underline-offset-4">
