@@ -244,6 +244,127 @@ export function ClipboardIcon(p: IconProps) {
   );
 }
 
+export function TruckIcon(p: IconProps) {
+  return (
+    <svg width={28} height={28} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M2 5.5A1.5 1.5 0 0 1 3.5 4H14a1.5 1.5 0 0 1 1.5 1.5V16H8.7a3.2 3.2 0 0 0-5.4 0H2V5.5Z" />
+      <path d="M17 8h2.6a1.5 1.5 0 0 1 1.2.6l1.9 2.6c.2.26.3.57.3.9V16h-1.3a3.2 3.2 0 0 0-5.4 0H17V8Z" />
+      <circle cx="6" cy="17.5" r="2.1" />
+      <circle cx="19.3" cy="17.5" r="2.1" />
+    </svg>
+  );
+}
+
+export function TagIcon(p: IconProps) {
+  return (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M11.6 3a2 2 0 0 0-1.42.59L3.6 10.17a2 2 0 0 0 0 2.83l7.4 7.4a2 2 0 0 0 2.83 0l6.58-6.58A2 2 0 0 0 21 12.4V5a2 2 0 0 0-2-2h-7.4Zm5.4 4.5a1.5 1.5 0 1 1 0-.01v.01Z" />
+      <circle cx="16.5" cy="6.5" r="1.5" fill="#fff" />
+    </svg>
+  );
+}
+
+export function CompleteOrderIcon(p: IconProps) {
+  return (
+    <svg {...base} width={22} height={22} strokeWidth={1.8} {...p}>
+      <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+      <path d="M18.5 2.5v3.2h-3.2" />
+      <path d="m8.2 12.3 2.6 2.6 5-5.4" />
+    </svg>
+  );
+}
+
+export function ChatFilledIcon(p: IconProps) {
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-8.6L7 21v-4H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+      <path d="M7 9h10M7 12.5h6" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function KebabIcon(p: IconProps) {
+  return (
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <circle cx="12" cy="5" r="1.7" />
+      <circle cx="12" cy="12" r="1.7" />
+      <circle cx="12" cy="19" r="1.7" />
+    </svg>
+  );
+}
+
+export function GiftIcon(p: IconProps) {
+  return (
+    <svg width={19} height={19} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M3.5 8h17a.5.5 0 0 1 .5.5V11H3V8.5a.5.5 0 0 1 .5-.5Z" />
+      <path d="M4 12.5h7V21H5a1 1 0 0 1-1-1v-7.5ZM13 12.5h7V20a1 1 0 0 1-1 1h-6v-8.5Z" />
+      <path d="M12 8C9 8 6.8 6.9 6.8 5.2 6.8 4 7.8 3 9.1 3 11 3 12 5.5 12 8Zm0 0c3 0 5.2-1.1 5.2-2.8C17.2 4 16.2 3 14.9 3 13 3 12 5.5 12 8Z" />
+    </svg>
+  );
+}
+
+export function GlobeIcon(p: IconProps) {
+  return (
+    <svg {...base} width={17} height={17} strokeWidth={1.5} {...p}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3c2.5 2.4 3.8 5.6 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.6-3.8-9S9.5 5.4 12 3Z" />
+    </svg>
+  );
+}
+
+export function CloseIcon(p: IconProps) {
+  return (
+    <svg {...base} width={18} height={18} strokeWidth={2} {...p}>
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
+export function BellIcon(p: IconProps) {
+  return (
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M12 2a6.5 6.5 0 0 0-6.5 6.5v3.9L4 16h16l-1.5-3.6V8.5A6.5 6.5 0 0 0 12 2Z" />
+      <path d="M9.8 18a2.3 2.3 0 0 0 4.4 0H9.8Z" />
+    </svg>
+  );
+}
+
+export function NoteIcon(p: IconProps) {
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5v-5h5M15 20l6-5" fillRule="evenodd" />
+      <path d="M4 4h17v10h-6v6H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm13 16v-4h4l-4 4Z" />
+    </svg>
+  );
+}
+
+export function PlusIcon(p: IconProps) {
+  return (
+    <svg {...base} width={16} height={16} strokeWidth={2} {...p}>
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+export function QuestionCircleIcon(p: IconProps) {
+  return (
+    <svg {...base} width={15} height={15} strokeWidth={1.6} {...p}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 9.5a2.5 2.5 0 0 1 4.5 1.5c0 1.5-2 2-2 3" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+
+export function CheckIcon(p: IconProps) {
+  return (
+    <svg {...base} width={16} height={16} strokeWidth={2.2} {...p}>
+      <path d="m4.5 12.5 5 5L19.5 7" />
+    </svg>
+  );
+}
+
 export function Star({ fill = "full" }: { fill?: "full" | "half" }) {
   if (fill === "half") {
     return (
