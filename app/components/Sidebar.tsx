@@ -36,7 +36,7 @@ type NavItem = {
 const items: NavItem[] = [
   { label: "Search", icon: <SearchIcon /> },
   { label: "Dashboard", icon: <HomeIcon />, href: "/" },
-  { label: "Listings", icon: <ListingsIcon /> },
+  { label: "Listings", icon: <ListingsIcon />, href: "/listings" },
   { label: "Messages", icon: <MessagesIcon /> },
   { label: "Orders", icon: <OrdersIcon />, href: "/orders", badge: 4 },
   { label: "Etsy search visibility", icon: <VisibilityIcon /> },

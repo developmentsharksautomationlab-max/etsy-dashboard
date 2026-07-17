@@ -365,6 +365,58 @@ export function CheckIcon(p: IconProps) {
   );
 }
 
+export function CogIcon(p: IconProps) {
+  return (
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58ZM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2Z" />
+    </svg>
+  );
+}
+
+export function GridViewIcon(p: IconProps) {
+  return (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <rect x="3" y="3" width="8" height="8" rx="1" />
+      <rect x="13" y="3" width="8" height="8" rx="1" />
+      <rect x="3" y="13" width="8" height="8" rx="1" />
+      <rect x="13" y="13" width="8" height="8" rx="1" />
+    </svg>
+  );
+}
+
+export function ListViewIcon(p: IconProps) {
+  return (
+    <svg {...base} width={18} height={18} strokeWidth={2.2} {...p}>
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  );
+}
+
+export function StarFilledIcon(p: IconProps) {
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="m12 2 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18l-5.9 3.2 1.2-6.6L2.5 9l6.6-.9Z" />
+    </svg>
+  );
+}
+
+export function StarOutlineIcon(p: IconProps) {
+  return (
+    <svg
+      width={22}
+      height={22}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinejoin="round"
+      {...p}
+    >
+      <path d="m12 2.8 2.7 5.6 6.2.9-4.5 4.3 1.1 6.1L12 16.9l-5.5 2.8 1.1-6.1L3.1 9.3l6.2-.9Z" />
+    </svg>
+  );
+}
+
 export function Star({ fill = "full" }: { fill?: "full" | "half" }) {
   if (fill === "half") {
     return (
