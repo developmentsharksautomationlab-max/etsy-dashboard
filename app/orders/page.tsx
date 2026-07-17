@@ -4,7 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import ProductThumb from "./ProductThumb";
 import OrderDetailPanel from "./OrderDetailPanel";
-import { orderGroups, totalOrders, type Order, type OrderGroup } from "./data";
+import {
+  completedOrders,
+  orderGroups,
+  totalOrders,
+  type Order,
+  type OrderGroup,
+} from "./data";
 import {
   SearchIcon,
   GearIcon,
@@ -55,14 +61,16 @@ export default function OrdersPage() {
   const [detailFilters, setDetailFilters] = useState<Set<string>>(new Set());
   const [upgradeRequested, setUpgradeRequested] = useState(false);
 
-  // Deep link: /orders?order=<id> opens that order's detail panel
+  // Deep links: /orders?order=<id> opens that order's detail panel,
+  // /orders?tab=completed opens the Completed tab
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("order");
-    if (!id) return;
-    const order = orderGroups
-      .flatMap((g) => g.orders)
-      .find((o) => o.id === id);
+    const params = new URLSearchParams(window.location.search);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- URL is only readable on the client, after mount
+    if (params.get("tab") === "completed") setTab("completed");
+    const id = params.get("order");
+    if (!id) return;
+    const order = [...orderGroups.flatMap((g) => g.orders), ...completedOrders]
+      .find((o) => o.id === id);
     if (order) setOpenOrder(order);
   }, []);
 
@@ -300,9 +308,28 @@ export default function OrdersPage() {
                   )}
                 </>
               ) : (
-                <p className="mt-16 text-center text-[15px] text-[#595959]">
-                  No completed orders yet.
-                </p>
+                <div className="mt-5 space-y-6">
+                  <section className="overflow-hidden rounded-xl border border-[#e5e3dc]">
+                    <div className="flex items-center gap-3 bg-[#f3f1ea] px-5 py-3">
+                      <span className="text-[15px] font-semibold text-[#222]">
+                        Completed
+                      </span>
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[13px] font-semibold text-[#222]">
+                        {completedOrders.length}
+                      </span>
+                    </div>
+                    {completedOrders.map((order, i) => (
+                      <OrderCard
+                        key={order.id}
+                        order={order}
+                        checked={selected.has(order.id)}
+                        onToggle={() => toggleOrder(order.id)}
+                        onOpen={() => setOpenOrder(order)}
+                        divider={i !== completedOrders.length - 1}
+                      />
+                    ))}
+                  </section>
+                </div>
               )}
             </div>
 

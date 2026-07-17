@@ -246,6 +246,87 @@ export const orderGroups: OrderGroup[] = [
   },
 ];
 
+export const completedOrders: Order[] = [
+  {
+    id: "4102331877",
+    buyer: "Rachel Kim",
+    username: "rachelkim",
+    orderNumber: "#4102331877",
+    total: "USD 48.23",
+    coupon: { code: "45SAVE", off: "45% off" },
+    dispatchLabel: "Dispatched 28 Jun, 2026",
+    orderedDate: "Ordered 24 Jun, 2026",
+    orderedFull: "Ordered 11:27, Wed, 24 Jun, 2026",
+    deliveryMethod: "Standard Delivery",
+    deliveryPrice: "USD 4.99",
+    deliverToName: "Rachel Kim",
+    deliverToCity: "Bend, OR",
+    address: [
+      "Rachel Kim",
+      "1173 NW Galveston Ave",
+      "Bend, OR 97703-2643",
+      "United States",
+    ],
+    itemCount: 1,
+    items: [
+      {
+        title: mapTitle,
+        quantity: 1,
+        thumb: "wooden-map",
+        price: "USD 78.62",
+        transactionId: "5130771284",
+      },
+    ],
+    receipt: {
+      itemTotal: "USD 78.62",
+      couponDiscount: "-USD 35.38",
+      subtotal: "USD 43.24",
+      postage: "USD 4.99",
+      orderTotal: "USD 48.23",
+      paidOn: "Paid via Etsy Payments on 24 Jun, 2026",
+    },
+  },
+  {
+    id: "4095214760",
+    buyer: "Emily Harper",
+    username: "emilyharper",
+    orderNumber: "#4095214760",
+    total: "USD 89.78",
+    dispatchLabel: "Dispatched 19 Jun, 2026",
+    orderedDate: "Ordered 15 Jun, 2026",
+    orderedFull: "Ordered 16:54, Mon, 15 Jun, 2026",
+    deliveryMethod: "Standard Delivery",
+    deliveryPrice: "USD 4.99",
+    deliverToName: "Emily Harper",
+    deliverToCity: "Franklin, TN",
+    address: [
+      "Emily Harper",
+      "413 Cheltenham Ave",
+      "Franklin, TN 37064-5521",
+      "United States",
+    ],
+    gift: true,
+    itemCount: 1,
+    items: [
+      {
+        title: mahjongTitle,
+        quantity: 1,
+        thumb: "mahjong",
+        price: "USD 79.99",
+        transactionId: "5127403956",
+      },
+    ],
+    receipt: {
+      itemTotal: "USD 79.99",
+      subtotal: "USD 79.99",
+      postage: "USD 4.99",
+      salesTax: "USD 4.80",
+      orderTotal: "USD 89.78",
+      paidOn: "Paid via Etsy Payments on 15 Jun, 2026",
+    },
+  },
+];
+
 export const totalOrders = orderGroups.reduce(
   (sum, g) => sum + g.orders.length,
   0
