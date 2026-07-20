@@ -1,7 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChevronDownIcon, ClockIcon } from "./icons";
+import { useEffect, useRef, useState } from "react";
+import { CheckIcon, ChevronDownIcon, ClockIcon } from "./icons";
+
+const DATE_RANGE_OPTIONS = [
+  "Today",
+  "Yesterday",
+  "Last 7 days",
+  "Last 30 days",
+  "This month",
+  "This year",
+  "Last year",
+  "All time",
+] as const;
+
+type DateRange = (typeof DATE_RANGE_OPTIONS)[number];
 
 type StatValues = {
   totalViews: string;
@@ -24,6 +37,19 @@ const RESET: StatValues = {
   revenue: "$0",
 };
 
+// Mock numbers shown for each date range (everything except "This year",
+// which uses the editable DEFAULTS/localStorage value below)
+const RANGE_STATS: Record<DateRange, StatValues> = {
+  Today: { totalViews: "34", visits: "19", orders: "2", revenue: "$28" },
+  Yesterday: { totalViews: "121", visits: "68", orders: "6", revenue: "$79" },
+  "Last 7 days": { totalViews: "742", visits: "402", orders: "34", revenue: "$468" },
+  "Last 30 days": { totalViews: "2,180", visits: "1,150", orders: "102", revenue: "$1,340" },
+  "This month": { totalViews: "1,536", visits: "812", orders: "71", revenue: "$942" },
+  "This year": DEFAULTS,
+  "Last year": { totalViews: "4,890", visits: "2,398", orders: "306", revenue: "$3,984" },
+  "All time": { totalViews: "18,240", visits: "9,650", orders: "1,206", revenue: "$16,430" },
+};
+
 const STORAGE_KEY = "etsy-stats-values";
 
 const fields: { key: keyof StatValues; label: string }[] = [
@@ -37,6 +63,23 @@ export default function StatsSection() {
   const [values, setValues] = useState<StatValues>(DEFAULTS);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<StatValues>(DEFAULTS);
+  // The editable "This year" baseline (customized via the hidden editor + localStorage)
+  const [thisYearValues, setThisYearValues] = useState<StatValues>(DEFAULTS);
+  const [dateRange, setDateRange] = useState<DateRange>("This year");
+  const [rangeOpen, setRangeOpen] = useState(false);
+  const rangeRef = useRef<HTMLDivElement>(null);
+
+  // Close the date range dropdown when clicking outside it
+  useEffect(() => {
+    if (!rangeOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (rangeRef.current && !rangeRef.current.contains(e.target as Node)) {
+        setRangeOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [rangeOpen]);
 
   // Load saved values after mount (avoids hydration mismatch)
   useEffect(() => {
@@ -46,6 +89,7 @@ export default function StatsSection() {
         const parsed = { ...DEFAULTS, ...JSON.parse(saved) } as StatValues;
         setValues(parsed);
         setDraft(parsed);
+        setThisYearValues(parsed);
       }
     } catch {
       /* ignore */
@@ -59,6 +103,8 @@ export default function StatsSection() {
 
   const applyValues = () => {
     setEditing(false);
+    setDateRange("This year");
+    setThisYearValues(draft);
     // Step 1: reset old numbers to zero (visible reset)
     setValues(RESET);
     // Step 2: after a short delay, show the new numbers
@@ -74,6 +120,15 @@ export default function StatsSection() {
 
   const resetToDefaults = () => {
     setDraft(DEFAULTS);
+  };
+
+  const selectRange = (range: DateRange) => {
+    setDateRange(range);
+    setRangeOpen(false);
+    const next = range === "This year" ? thisYearValues : RANGE_STATS[range];
+    // Reuse the same reset-then-reveal animation as manual edits
+    setValues(RESET);
+    window.setTimeout(() => setValues(next), 600);
   };
 
   return (
@@ -93,11 +148,35 @@ export default function StatsSection() {
       </div>
 
       <div className="mt-4 rounded-xl border border-[#e5e3dc] p-4 sm:p-6">
-        <button className="flex items-center gap-1.5 text-[15px] text-[#222]">
-          <span className="font-semibold">Date Range</span>
-          <span className="text-[#595959]">This year</span>
-          <ChevronDownIcon className="text-[#595959]" />
-        </button>
+        <div className="relative inline-block" ref={rangeRef}>
+          <button
+            onClick={() => setRangeOpen((o) => !o)}
+            className="flex items-center gap-1.5 text-[15px] text-[#222]"
+          >
+            <span className="font-semibold">Date Range</span>
+            <span className="text-[#595959]">{dateRange}</span>
+            <ChevronDownIcon
+              className={`text-[#595959] transition-transform ${rangeOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          {rangeOpen && (
+            <div className="absolute left-0 top-full z-10 mt-2 w-48 overflow-hidden rounded-xl border border-[#e5e3dc] bg-white py-1 shadow-lg">
+              {DATE_RANGE_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  onClick={() => selectRange(option)}
+                  className={`flex w-full items-center justify-between px-4 py-2 text-left text-[14px] text-[#222] hover:bg-[#f4f3ee] ${
+                    option === "All time" ? "border-t border-[#1878f2]" : ""
+                  }`}
+                >
+                  {option}
+                  {dateRange === option && <CheckIcon className="text-[#222]" />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="mt-5 grid grid-cols-2 gap-y-6 sm:grid-cols-4">
           {fields.map((field) => (
             <div key={field.key}>
