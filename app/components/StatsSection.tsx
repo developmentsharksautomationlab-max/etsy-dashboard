@@ -37,8 +37,9 @@ const RESET: StatValues = {
   revenue: "$0",
 };
 
-// Mock numbers shown for each date range (everything except "This year",
-// which uses the editable DEFAULTS/localStorage value below)
+// Mock numbers shown for each date range. Any range's numbers can be
+// overridden via the hidden editor; overrides are persisted per range
+// (see `overrides` state below).
 const RANGE_STATS: Record<DateRange, StatValues> = {
   Today: { totalViews: "34", visits: "19", orders: "2", revenue: "$28" },
   Yesterday: { totalViews: "121", visits: "68", orders: "6", revenue: "$79" },
@@ -63,11 +64,13 @@ export default function StatsSection() {
   const [values, setValues] = useState<StatValues>(DEFAULTS);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<StatValues>(DEFAULTS);
-  // The editable "This year" baseline (customized via the hidden editor + localStorage)
-  const [thisYearValues, setThisYearValues] = useState<StatValues>(DEFAULTS);
+  // Per-range overrides customized via the hidden editor + localStorage
+  const [overrides, setOverrides] = useState<Partial<Record<DateRange, StatValues>>>({});
   const [dateRange, setDateRange] = useState<DateRange>("This year");
   const [rangeOpen, setRangeOpen] = useState(false);
   const rangeRef = useRef<HTMLDivElement>(null);
+
+  const baseValuesFor = (range: DateRange) => overrides[range] ?? RANGE_STATS[range];
 
   // Close the date range dropdown when clicking outside it
   useEffect(() => {
@@ -86,10 +89,13 @@ export default function StatsSection() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = { ...DEFAULTS, ...JSON.parse(saved) } as StatValues;
-        setValues(parsed);
-        setDraft(parsed);
-        setThisYearValues(parsed);
+        const parsed = JSON.parse(saved) as Partial<Record<DateRange, StatValues>>;
+        setOverrides(parsed);
+        const current = parsed["This year"];
+        if (current) {
+          setValues(current);
+          setDraft(current);
+        }
       }
     } catch {
       /* ignore */
@@ -103,15 +109,16 @@ export default function StatsSection() {
 
   const applyValues = () => {
     setEditing(false);
-    setDateRange("This year");
-    setThisYearValues(draft);
+    // Edits apply to whichever date range is currently active, not always "This year"
+    const nextOverrides = { ...overrides, [dateRange]: draft };
+    setOverrides(nextOverrides);
     // Step 1: reset old numbers to zero (visible reset)
     setValues(RESET);
     // Step 2: after a short delay, show the new numbers
     window.setTimeout(() => {
       setValues(draft);
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nextOverrides));
       } catch {
         /* ignore */
       }
@@ -119,13 +126,13 @@ export default function StatsSection() {
   };
 
   const resetToDefaults = () => {
-    setDraft(DEFAULTS);
+    setDraft(RANGE_STATS[dateRange]);
   };
 
   const selectRange = (range: DateRange) => {
     setDateRange(range);
     setRangeOpen(false);
-    const next = range === "This year" ? thisYearValues : RANGE_STATS[range];
+    const next = baseValuesFor(range);
     // Reuse the same reset-then-reveal animation as manual edits
     setValues(RESET);
     window.setTimeout(() => setValues(next), 600);
@@ -210,7 +217,8 @@ export default function StatsSection() {
               Edit stats numbers
             </h4>
             <p className="mt-1 text-[14px] text-[#595959]">
-              Enter your values. Old numbers reset first, then yours appear.
+              Editing values for <span className="font-medium text-[#222]">{dateRange}</span>.
+              Old numbers reset first, then yours appear.
             </p>
 
             <div className="mt-5 space-y-4">
@@ -225,7 +233,7 @@ export default function StatsSection() {
                       setDraft((d) => ({ ...d, [field.key]: e.target.value }))
                     }
                     className="w-full rounded-lg border border-[#d6d4cc] px-3 py-2 text-[15px] text-[#222] outline-none focus:border-[#222]"
-                    placeholder={DEFAULTS[field.key]}
+                    placeholder={RANGE_STATS[dateRange][field.key]}
                   />
                 </div>
               ))}
